@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  mongo:
+    container_name: tts_mongodb
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}
+    volumes:
+      - mongodb_data_container:/data/db
+
+  redis:
+    container_name: tts_redis
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tts_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+      - redis
+    links:
+      - db
+      - redis
+
+volumes:
+  mongodb_data_container:
