@@ -7,7 +7,7 @@ services:
     ports:
       - "27017:27017"
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}
     volumes:
       - mongodb_data_container:/data/db
@@ -29,7 +29,7 @@ services:
       - mongo
       - redis
     links:
-      - db
+      - mongo
       - redis
 
 volumes:
