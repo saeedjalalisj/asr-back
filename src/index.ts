@@ -1,1 +1,3 @@
-console.log('Hello world!')
+// Infra
+import "./shared/infra/http/app"
+
