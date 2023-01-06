@@ -1,19 +1,21 @@
-version: "3"
+version: "3.8"
 
 services:
-  mongo:
-    container_name: tts_mongodb
-    image: mongo:latest
-    ports:
-      - "27017:27017"
+  postgres:
+    container_name: asr_postgres
+    image: postgres
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}
+      POSTGRES_USER: ${ASR_DB_USER}
+      POSTGRES_PASSWORD: ${ASR_DB_PASS}
+      PGDATA: /data/postgres
     volumes:
-      - mongodb_data_container:/data/db
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
 
   redis:
-    container_name: tts_redis
+    container_name: asr_redis
     image: redis:latest
     ports:
       - "6379:6379"
@@ -22,15 +24,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: tts_app
+    container_name: asr_app
     ports:
       - "3000:3000"
     depends_on:
-      - mongo
+      - postgres
       - redis
     links:
-      - mongo
+      - postgres
       - redis
 
 volumes:
-  mongodb_data_container:
+  postgres:
