@@ -14,7 +14,6 @@ export interface VoiceProps {
     title: VoiceTitle;
     result: VoiceResult
     status: VoiceStatus;
-    date?: string | Date;
 }
 
 export class Voice extends AggregateRoot<VoiceProps> {
@@ -30,9 +29,10 @@ export class Voice extends AggregateRoot<VoiceProps> {
         return this.props.title;
     }
 
-    get date(): string | Date {
-        return this.props.date;
+    get status(): VoiceStatus {
+        return this.props.status
     }
+
     private constructor (props: VoiceProps, id?: UniqueEntityID) {
         super(props, id);
     }

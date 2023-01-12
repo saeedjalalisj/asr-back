@@ -1,0 +1,1 @@
+import models from "../../../shared/infra/database/sequelize/models";
