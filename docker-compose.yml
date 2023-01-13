@@ -7,7 +7,6 @@ services:
     environment:
       POSTGRES_USER: ${ASR_DB_USER}
       POSTGRES_PASSWORD: ${ASR_DB_PASS}
-      PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
     ports:

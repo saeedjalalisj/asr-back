@@ -5,9 +5,7 @@ const {
   ASR_DB_USER, 
   ASR_DB_PASS, 
   ASR_DB_HOST,
-  ASR_DB_DEV_DB_NAME,
-  ASR_DB_TEST_DB_NAME,
-  ASR_DB_PROD_DB_NAME,
+  DB_NAME,
   NODE_ENV,
   ASR_IS_PRODUCTION,
   CLEARDB_DATABASE_URL
@@ -17,21 +15,21 @@ const databaseCredentials = {
   "development": {
     "username": ASR_DB_USER,
     "password": ASR_DB_PASS,
-    "database": ASR_DB_DEV_DB_NAME,
+    "database": DB_NAME,
     "host": ASR_DB_HOST,
     "dialect": "postgres"
   },
   "test": {
     "username": ASR_DB_USER,
     "password": ASR_DB_PASS,
-    "database": ASR_DB_TEST_DB_NAME,
+    "database": DB_NAME,
     "host": ASR_DB_HOST,
     "dialect": "postgres"
   },
   "production": {
     "username": ASR_DB_USER,
     "password": ASR_DB_PASS,
-    "database": ASR_DB_PROD_DB_NAME,
+    "database": DB_NAME,
     "host": ASR_DB_HOST,
     "dialect": "postgres"
   }
