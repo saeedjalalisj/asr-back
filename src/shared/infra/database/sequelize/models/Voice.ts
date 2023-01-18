@@ -1,3 +1,4 @@
+import {Sequelize} from "sequelize";
 
 export default (sequelize, DataTypes) => {
     const Voice = sequelize.define('voice', {
@@ -28,12 +29,12 @@ export default (sequelize, DataTypes) => {
         created_at: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.literal('CURRENT_TIMESTAMP'),
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         },
         updated_at: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.literal('CURRENT_TIMESTAMP')
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         },
     },{
         timestamps: true,
@@ -45,9 +46,9 @@ export default (sequelize, DataTypes) => {
     });
 
     Voice.associate = (models) => {
-        Voice.belongsTo(models.BaseUser, { foreignKey: "user_id", targetKey: 'user_id', as: 'User' })
+        Voice.belongsTo(models.User, { foreignKey: "user_id", targetKey: 'user_id', as: 'User' })
         Voice.hasOne(models.Result, { foreignKey: "voice_id" });
-        Voice.hasOne(models.FILE, { foreignKey: "voice_id" })
+        Voice.hasOne(models.File, { foreignKey: "voice_id" })
     }
 
     return Voice;

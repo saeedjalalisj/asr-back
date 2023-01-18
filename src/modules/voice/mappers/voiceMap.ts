@@ -7,8 +7,10 @@ export class VoiceMap implements Mapper<Voice> {
             title: voice.title.value,
             updatedAt: new Date().toString(),
             voice_id: voice.voiceId.id.toString(),
-            status: voice.status.value,
-            filePath: voice.filePath
+            status: voice.status,
+            filePath: voice.filePath,
+            user_id: voice.userId
         }
+
     }
 }

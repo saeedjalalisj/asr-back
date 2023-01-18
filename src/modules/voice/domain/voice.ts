@@ -14,6 +14,7 @@ export interface VoiceProps {
     title: VoiceTitle;
     result: VoiceResult
     status: VoiceStatus;
+    userId: string;
 }
 
 export class Voice extends AggregateRoot<VoiceProps> {
@@ -23,6 +24,10 @@ export class Voice extends AggregateRoot<VoiceProps> {
     }
     get filePath(): VoiceFilePath {
         return this.props.filePath;
+    }
+
+    get userId(): string {
+        return this.props.userId;
     }
 
     get title(): VoiceTitle {
@@ -41,7 +46,8 @@ export class Voice extends AggregateRoot<VoiceProps> {
         const guardArgs: IGuardArgument[] = [
             { argument: props.filePath, argumentName: 'filePath' },
             { argument: props.title, argumentName: 'title' },
-            { argument: props.status, argumentName: 'status' }
+            { argument: props.status, argumentName: 'status' },
+            { argument: props.userId, argumentName: 'userId' }
         ];
 
         const guardResult = Guard.againstNullOrUndefinedBulk(guardArgs);

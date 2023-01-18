@@ -6,7 +6,7 @@ import * as Sequelize from 'sequelize'
 
 const sequelize = config.connection;
 
-// turns base_user => BaseUser
+// turns user => User
 function toCamelCase (str) {
   const _ = str.indexOf("_");
   if (~_) {
@@ -31,11 +31,11 @@ const createModels = () => {
   // Get all models
   const modelsList = fs.readdirSync(path.resolve(__dirname, "./"))
     .filter((t) => (~t.indexOf('.ts') || ~t.indexOf('.js')) && !~t.indexOf("index") && !~t.indexOf(".map"))
-    .map((model) => sequelize.define(__dirname + '/' + model))
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    .map((model) => require(__dirname + '/' + model).default(sequelize,  Sequelize.DataTypes))
 
   // Camel case the models
   for (let i = 0; i < modelsList.length; i++) {
-    console.log(modelsList[i])
     const modelName = toCamelCase(modelsList[i].name);
     models[modelName] = modelsList[i];
   }
@@ -51,7 +51,6 @@ const createModels = () => {
   models['Sequelize'] = Sequelize;
 
   modelsLoaded = true;
-
   return models;
 }
 

@@ -3,7 +3,7 @@ import runner from "../runner"
 export default {
     up: async (queryInterface, Sequelize) => {
         const CREATE_BASE_USER = () => {
-            return queryInterface.createTable('base_user', {
+            return queryInterface.createTable('user', {
                 user_id: {
                     type: Sequelize.UUID,
                     defaultValue: Sequelize.UUIDV4,
@@ -64,7 +64,7 @@ export default {
                     type: Sequelize.UUID,
                     allowNull: false,
                     references: {
-                        model: 'base_user',
+                        model: 'user',
                         key: 'user_id'
                     },
                     onDelete: 'cascade',

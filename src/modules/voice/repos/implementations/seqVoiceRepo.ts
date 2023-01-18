@@ -9,7 +9,7 @@ export class VoiceRepo implements IVoiceRepo {
         this.models = models;
     }
 
-    private async save(voice: Voice): Promise<void>{
+    public async save(voice: Voice): Promise<void>{
         try {
             const rawSeqVoice = await VoiceMap.toPersistence(voice)
             await this.models.Voice.create(rawSeqVoice);

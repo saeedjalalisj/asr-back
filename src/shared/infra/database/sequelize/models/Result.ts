@@ -1,6 +1,7 @@
+import {Sequelize} from "sequelize";
 
 export default (sequelize, DataTypes) => {
-    const Result = sequelize.define('result ', {
+    const Result = sequelize.define('result', {
         result_id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -24,12 +25,12 @@ export default (sequelize, DataTypes) => {
         created_at: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.literal('CURRENT_TIMESTAMP'),
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         },
         updated_at: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.literal('CURRENT_TIMESTAMP')
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         },
     },{
         timestamps: true,
@@ -38,7 +39,7 @@ export default (sequelize, DataTypes) => {
     });
 
     Result.associate = (models) => {
-        Result.belongsTo(models.Vocie, { foreignKey: "voice_id" })
+        Result.belongsTo(models.Voice, { foreignKey: "voice_id" })
     }
 
     return Result;

@@ -80,6 +80,7 @@ export class CreateUserUseCase implements UseCase<CreateUserDTO, Promise<Respons
       return right(Result.ok<void>())
 
     } catch (err) {
+      console.log(err)
       return left(new AppError.UnexpectedError(err)) as Response;
     }
   }

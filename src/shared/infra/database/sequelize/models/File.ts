@@ -1,3 +1,4 @@
+import {Sequelize} from "sequelize";
 
 export default (sequelize, DataTypes) => {
     const File = sequelize.define('file', {
@@ -28,12 +29,12 @@ export default (sequelize, DataTypes) => {
         created_at: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.literal('CURRENT_TIMESTAMP'),
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         },
         updated_at: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.literal('CURRENT_TIMESTAMP')
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         },
     },{
         timestamps: true,
