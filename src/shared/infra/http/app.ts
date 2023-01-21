@@ -6,12 +6,16 @@ import helmet from 'helmet';
 import compression from 'compression';
 import { v1Router } from './api/v1';
 import { port } from '../../../config';
+import * as fs from "fs";
 
 const origin = {
   // origin: isProduction ? 'https://dddforum.com' : '*',
   origin: "*"
 }
 
+if (!fs.existsSync(`${process.cwd()}/uploads`)) {
+  fs.mkdirSync(`${process.cwd()}/uploads`);
+}
 const app = express();
 
 app.use(bodyParser.json())

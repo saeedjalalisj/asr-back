@@ -8,16 +8,6 @@ export default (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true
         },
-        voice_id: {
-            type: DataTypes.UUID,
-            allowNull: false,
-            references: {
-                model: 'voice',
-                key: 'voice_id'
-            },
-            onDelete: 'cascade',
-            onUpdate: 'cascade',
-        },
         path: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -43,7 +33,7 @@ export default (sequelize, DataTypes) => {
     });
 
     File.associate = (models) => {
-        File.belongsTo(models.Voice, { foreignKey: "voice_id" });
+        File.hasOne(models.Voice, { foreignKey: "file_id" });
     }
 
     return File;

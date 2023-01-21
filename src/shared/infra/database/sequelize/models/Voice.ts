@@ -18,6 +18,16 @@ export default (sequelize, DataTypes) => {
             onDelete: 'cascade',
             onUpdate: 'cascade',
         },
+        file_id: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: 'file',
+                key: 'file_id'
+            },
+            onDelete: 'cascade',
+            onUpdate: 'cascade',
+        },
         status: {
             type: DataTypes.STRING(30),
             allowNull: false
@@ -48,7 +58,7 @@ export default (sequelize, DataTypes) => {
     Voice.associate = (models) => {
         Voice.belongsTo(models.User, { foreignKey: "user_id", targetKey: 'user_id', as: 'User' })
         Voice.hasOne(models.Result, { foreignKey: "voice_id" });
-        Voice.hasOne(models.File, { foreignKey: "voice_id" })
+        Voice.belongsTo(models.File, { foreignKey: "file_id" })
     }
 
     return Voice;

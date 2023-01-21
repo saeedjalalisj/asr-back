@@ -70,6 +70,16 @@ export default {
                     onDelete: 'cascade',
                     onUpdate: 'cascade',
                 },
+                file_id: {
+                    type: Sequelize.UUID,
+                    allowNull: false,
+                    references: {
+                        model: 'file',
+                        key: 'file_id'
+                    },
+                    onDelete: 'cascade',
+                    onUpdate: 'cascade',
+                },
                 status: {
                     type: Sequelize.STRING(30),
                     allowNull: false
@@ -133,16 +143,6 @@ export default {
                     allowNull: false,
                     primaryKey: true
                 },
-                voice_id: {
-                    type: Sequelize.UUID,
-                    allowNull: false,
-                    references: {
-                        model: 'voice',
-                        key: 'voice_id'
-                    },
-                    onDelete: 'cascade',
-                    onUpdate: 'cascade',
-                },
                 path: {
                     type: Sequelize.STRING,
                     allowNull: false,
@@ -166,18 +166,18 @@ export default {
 
         await runner.run([
             () => CREATE_BASE_USER(),
+            () => CREATE_FILES(),
             () => CREATE_VOICE(),
             () => CREATE_RESULT(),
-            () => CREATE_FILES(),
         ])
     },
     // eslint-disable @typescript-eslint/no-unused-vars
     down: (queryInterface, Sequelize) => {
         return runner.run([
             () => queryInterface.dropTable('user'),
-            () => queryInterface.dropTable('voice'),
             () => queryInterface.dropTable('result'),
             () => queryInterface.dropTable('file'),
+            () => queryInterface.dropTable('voice'),
         ])
     }
 };
