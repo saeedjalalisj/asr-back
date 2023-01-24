@@ -24,23 +24,17 @@ export class CreateVoice implements UseCase<CreateVoiceDto, Promise<Response>> {
 
     public async execute(request: CreateVoiceDto): Promise<Response> {
         let title: VoiceTitle;
-        let filepath: VoiceFilePath;
         let voice: Voice;
-        const { userId } = request;
+        const { userId, fileId } = request;
         try {
             const titleOrError = VoiceTitle.create({ value: request.title });
             if (titleOrError.isFailure) {
                 return left(titleOrError);
             }
             title = titleOrError.getValue();
-            const filepathOrError = VoiceFilePath.create({ value: request.file_path });
-            if (filepathOrError.isFailure) {
-                return left(filepathOrError);
-            }
-            filepath = filepathOrError.getValue();
             const voiceProps: VoiceProps = {
                 title,
-                filePath: filepath,
+                fileId: fileId,
                 status: 'uploaded',
                 result: null,
                 userId

@@ -9,7 +9,7 @@ const dispatchEventsCallback = (model: any, primaryKeyField: string) => {
 }
 
 (async function createHooksForAggregateRoots () {
-  const { User } = models;
+  const { User, Voice } = models;
 
   User.addHook('afterCreate', (m: any) => dispatchEventsCallback(m, 'user_id'));
   User.addHook('afterDestroy', (m: any) => dispatchEventsCallback(m, 'user_id'));
@@ -17,6 +17,14 @@ const dispatchEventsCallback = (model: any, primaryKeyField: string) => {
   User.addHook('afterSave', (m: any) => dispatchEventsCallback(m, 'user_id'));
   User.addHook('afterUpsert', (m: any) => dispatchEventsCallback(m, 'user_id'));
 
+
+  Voice.addHook('afterCreate', (m: any) => dispatchEventsCallback(m, 'voice_id'));
+  Voice.addHook('afterDestroy', (m: any) => dispatchEventsCallback(m, 'voice_id'));
+  Voice.addHook('afterUpdate', (m: any) => dispatchEventsCallback(m, 'voice_id'));
+  Voice.addHook('afterSave', (m: any) => dispatchEventsCallback(m, 'voice_id'));
+  Voice.addHook('afterUpsert', (m: any) => dispatchEventsCallback(m, 'voice_id'));
+
   console.log('[Hooks]: Sequelize hooks setup.')
+
 
 })();

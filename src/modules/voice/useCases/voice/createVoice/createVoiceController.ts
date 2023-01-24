@@ -16,7 +16,7 @@ export class CreateVoiceController extends BaseController {
         const { userId } = req.decoded;
         const dto: CreateVoiceDto = {
             title: TextUtils.sanitize(req.body.title),
-            file_path: req.body.file_path,
+            fileId: req.body.fileId,
             userId
         }
         try {

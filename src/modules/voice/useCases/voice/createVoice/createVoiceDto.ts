@@ -1,5 +1,5 @@
 export interface CreateVoiceDto {
     title: string;
-    file_path: string;
+    fileId: string;
     userId: string;
 }
