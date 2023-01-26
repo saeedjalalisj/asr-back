@@ -18,7 +18,7 @@ export class AfterVoiceCreated implements IHandle<VoiceCreated> {
     private async onVoiceCreated (event: VoiceCreated): Promise<void> {
         try {
             await this.sendToAI.execute({ fileId: event.voice.fileId, language: "fa" });
-            console.log(`[onVoiceCreated]: Updated voice stats for {${event.voice.title.value}`);
+            console.log(`[onVoiceCreated]: Updated voice stats for ${event.voice.title.value}`);
         } catch (err) {
             console.log(`[onVoiceCreated]: Failed to voice post stats for {${event.voice.title.value}}`);
         }
