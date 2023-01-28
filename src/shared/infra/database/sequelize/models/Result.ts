@@ -12,6 +12,10 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: true
         },
+        gender: {
+            type: DataTypes.TEXT,
+            allowNull: true
+        },
         voice_id: {
             type: DataTypes.UUID,
             allowNull: false,

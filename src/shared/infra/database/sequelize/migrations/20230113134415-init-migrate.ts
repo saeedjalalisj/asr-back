@@ -113,6 +113,10 @@ export default {
                     type: Sequelize.TEXT,
                     allowNull: true
                 },
+                gender: {
+                    type: Sequelize.TEXT,
+                    allowNull: true
+                },
                 voice_id: {
                     type: Sequelize.UUID,
                     allowNull: false,
