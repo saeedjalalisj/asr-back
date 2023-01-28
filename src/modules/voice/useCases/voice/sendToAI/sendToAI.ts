@@ -5,6 +5,7 @@ import {Either, Result, right} from "../../../../../shared/core/Result";
 import {AppError} from "../../../../../shared/core/AppError";
 import {IFileRepo} from "../../../../file/repos/fileRepo";
 import {Rabbitmq} from "../../../../../shared/infra/messageBroker/rabbitmq";
+import {createResult} from "../createResult";
 
 type Response = Either<
    AppError.UnexpectedError,
@@ -18,7 +19,7 @@ export class SendToAI implements UseCase<SendToAIDTO,Promise<Response>> {
     }
     public async execute(response: SendToAIDTO): Promise<Response> {
         try {
-            const { language, fileId } = response;
+            const { language, fileId, voiceId } = response;
             const file = await this.fileRepo.findById(fileId);
             const rabbit = await Rabbitmq.getInstance();
             const correlationId = crypto.randomUUID();
@@ -26,11 +27,19 @@ export class SendToAI implements UseCase<SendToAIDTO,Promise<Response>> {
                 filePath: file.filepath,
                 language
             }, correlationId);
-            rabbit.channel.responseEmitter.on("data", (msg) => {
-                if (msg.properties.correlationId === correlationId) {
-                    //TODO: save response to result
-                    console.log({correlationIdINNNNNNN:correlationId})
-                }
+            rabbit.channel.responseEmitter.on("data", async (msg) => {
+              try {
+                  if (msg.properties.correlationId === correlationId) {
+                      const response = JSON.parse(msg.content.toString());
+                      await createResult.execute({
+                          voiceId,
+                          text: response.data.result,
+                          gender: response.data.gender,
+                      });
+                  }
+              } catch (e) {
+                  console.log("e  :", e)
+              }
             });
             return right(Result.ok<any>("ok"));
         } catch (e) {

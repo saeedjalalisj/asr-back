@@ -1,11 +1,10 @@
 import { UseCase } from "../../../../../shared/core/UseCase";
 import { IVoiceRepo } from "../../../repos/voiceRepo";
-import {Either, Result, left, right, Left} from "../../../../../shared/core/Result";
+import {Either, Result, left, right} from "../../../../../shared/core/Result";
 import { AppError } from "../../../../../shared/core/AppError";
 import { CreateVoiceErrors } from "./createVoiceError";
 import {CreateVoiceDto} from "./createVoiceDto";
 import {VoiceTitle} from "../../../domain/voiceTitle";
-import {VoiceFilePath} from "../../../domain/voiceFilePath";
 import {Voice, VoiceProps} from "../../../domain/voice";
 
 type Response = Either<
