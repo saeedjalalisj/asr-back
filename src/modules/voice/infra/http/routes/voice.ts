@@ -2,7 +2,8 @@
 import express from 'express';
 import { middleware } from '../../../../../shared/infra/http';
 import { createVoiceController } from "../../../useCases/voice/createVoice";
-import {getVoiceListController} from "../../../useCases/voice/getVoiceList";
+import { getVoiceListController } from "../../../useCases/voice/getVoiceList";
+import { getVoiceByIdController } from "../../../useCases/voice/getVoiceById";
 
 const voiceRouter = express.Router();
 
@@ -16,6 +17,11 @@ voiceRouter.get('/',
     (req, res) => getVoiceListController.execute(req, res)
 );
 
+
+voiceRouter.get('/:id',
+    middleware.ensureAuthenticated(),
+    (req, res) => getVoiceByIdController.execute(req, res)
+);
 export {
     voiceRouter,
 }
