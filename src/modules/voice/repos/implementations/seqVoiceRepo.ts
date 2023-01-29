@@ -17,4 +17,14 @@ export class VoiceRepo implements IVoiceRepo {
             throw new Error(err.toString())
         }
     }
+
+    public async getVoiceList(page: number, offset: number): Promise<Voice[]> {
+        try {
+            console.log(page, offset)
+
+            return await this.models.Voice.findAndCountAll({limit: offset, offset: (page - 1) * offset});
+        } catch (e) {
+            throw new Error(e.toString())
+        }
+    }
 }
