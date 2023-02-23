@@ -1,11 +1,11 @@
 #!/bin/sh
 
-echo "Waiting for mongodb to start..."
+echo "Waiting for Postgres to start..."
 
-while ! nc -z tts_mongodb 27017; do
+while ! nc -z asr_postgres 5432; do
   sleep 0.1
 done
 
-echo "Mongodb started"
+echo "Postgres started"
 
 npm run start

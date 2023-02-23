@@ -7,3 +7,5 @@ npm-debug.log
 .netlify
 /dist
 .idea
+yarn-error.log
+uploads/

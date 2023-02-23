@@ -1,0 +1,1 @@
+export type VoiceStatus = 'success' | 'uploaded' | 'fail' | 'sent';
