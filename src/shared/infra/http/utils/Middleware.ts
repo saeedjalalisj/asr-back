@@ -2,6 +2,7 @@
 import { isProduction } from "../../../../config";
 import { IAuthService } from "../../../../modules/users/services/authService";
 import rateLimit from "express-rate-limit"
+import formidable from "formidable";
 
 export class Middleware {
   private authService: IAuthService;
@@ -86,7 +87,7 @@ export class Middleware {
     }
   
     const approvedDomainList = [
-      'https://khalilstemmler.com'
+      ''
     ]
   
     const domain = req.headers.origin;
@@ -98,6 +99,24 @@ export class Middleware {
       return res.status(403).json({ message: 'Unauthorized' })
     } else {
       return next();
+    }
+  }
+
+  public uploader () {
+    return (req, res, next) => {
+      const form = formidable({
+        uploadDir: `${process.cwd()}/uploads`,
+        maxFiles: 1,
+        maxFields: 1
+      });
+      form.parse(req, (err, fields, files) => {
+        if (err) {
+          next(err);
+          return;
+        }
+        req.body.files = files;
+        next();
+      })
     }
   }
 }

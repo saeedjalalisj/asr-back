@@ -1,6 +1,5 @@
 import { AggregateRoot } from "../../../shared/domain/AggregateRoot";
 import { UniqueEntityID } from "../../../shared/domain/UniqueEntityID";
-import {VoiceFilePath} from "./voiceFilePath";
 import {VoiceTitle} from "./voiceTitle";
 import {VoiceResult} from "./voiceResult";
 import {VoiceStatus} from "./voiceStatus";
@@ -10,11 +9,11 @@ import {VoiceCreated} from "./events/voiceCreated";
 import {VoiceId} from "./voiceId";
 
 export interface VoiceProps {
-    filePath: VoiceFilePath;
+    fileId: string;
     title: VoiceTitle;
     result: VoiceResult
     status: VoiceStatus;
-    date?: string | Date;
+    userId: string;
 }
 
 export class Voice extends AggregateRoot<VoiceProps> {
@@ -22,26 +21,32 @@ export class Voice extends AggregateRoot<VoiceProps> {
     get voiceId(): VoiceId {
         return VoiceId.create(this._id).getValue();
     }
-    get filePath(): VoiceFilePath {
-        return this.props.filePath;
+    get fileId(): string {
+        return this.props.fileId;
+    }
+
+    get userId(): string {
+        return this.props.userId;
     }
 
     get title(): VoiceTitle {
         return this.props.title;
     }
 
-    get date(): string | Date {
-        return this.props.date;
+    get status(): VoiceStatus {
+        return this.props.status
     }
+
     private constructor (props: VoiceProps, id?: UniqueEntityID) {
         super(props, id);
     }
 
     public static create(props: VoiceProps, id?: UniqueEntityID): Result<Voice> {
         const guardArgs: IGuardArgument[] = [
-            { argument: props.filePath, argumentName: 'filePath' },
+            { argument: props.fileId, argumentName: 'fileId' },
             { argument: props.title, argumentName: 'title' },
-            { argument: props.status, argumentName: 'status' }
+            { argument: props.status, argumentName: 'status' },
+            { argument: props.userId, argumentName: 'userId' }
         ];
 
         const guardResult = Guard.againstNullOrUndefinedBulk(guardArgs);

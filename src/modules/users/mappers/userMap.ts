@@ -29,7 +29,7 @@ export class UserMap implements Mapper<User> {
       isEmailVerified: raw.is_email_verified,
       password: userPasswordOrError.getValue(),
       email: userEmailOrError.getValue(),
-    }, new UniqueEntityID(raw.base_user_id));
+    }, new UniqueEntityID(raw.user_id));
 
     userOrError.isFailure ? console.log(userOrError.getErrorValue()) : '';
 
@@ -47,7 +47,7 @@ export class UserMap implements Mapper<User> {
     }
 
     return {
-      base_user_id: user.userId.id.toString(),
+      user_id: user.userId.id.toString(),
       user_email: user.email.value,
       is_email_verified: user.isEmailVerified,
       username: user.username.value,

@@ -9,25 +9,20 @@ const dispatchEventsCallback = (model: any, primaryKeyField: string) => {
 }
 
 (async function createHooksForAggregateRoots () {
-  const { BaseUser, Member, Post } = models;
+  const { User, Voice } = models;
 
-  BaseUser.addHook('afterCreate', (m: any) => dispatchEventsCallback(m, 'base_user_id'));
-  BaseUser.addHook('afterDestroy', (m: any) => dispatchEventsCallback(m, 'base_user_id'));
-  BaseUser.addHook('afterUpdate', (m: any) => dispatchEventsCallback(m, 'base_user_id'));
-  BaseUser.addHook('afterSave', (m: any) => dispatchEventsCallback(m, 'base_user_id'));
-  BaseUser.addHook('afterUpsert', (m: any) => dispatchEventsCallback(m, 'base_user_id'));
+  User.addHook('afterCreate', (m: any) => dispatchEventsCallback(m, 'user_id'));
+  User.addHook('afterDestroy', (m: any) => dispatchEventsCallback(m, 'user_id'));
+  User.addHook('afterUpdate', (m: any) => dispatchEventsCallback(m, 'user_id'));
+  User.addHook('afterSave', (m: any) => dispatchEventsCallback(m, 'user_id'));
+  User.addHook('afterUpsert', (m: any) => dispatchEventsCallback(m, 'user_id'));
 
-  Member.addHook('afterCreate', (m: any) => dispatchEventsCallback(m, 'member_id'));
-  Member.addHook('afterDestroy', (m: any) => dispatchEventsCallback(m, 'member_id'));
-  Member.addHook('afterUpdate', (m: any) => dispatchEventsCallback(m, 'member_id'));
-  Member.addHook('afterSave', (m: any) => dispatchEventsCallback(m, 'member_id'));
-  Member.addHook('afterUpsert', (m: any) => dispatchEventsCallback(m, 'member_id'));
 
-  Post.addHook('afterCreate', (m: any) => dispatchEventsCallback(m, 'post_id'));
-  Post.addHook('afterDestroy', (m: any) => dispatchEventsCallback(m, 'post_id'));
-  Post.addHook('afterUpdate', (m: any) => dispatchEventsCallback(m, 'post_id'));
-  Post.addHook('afterSave', (m: any) => dispatchEventsCallback(m, 'post_id'));
-  Post.addHook('afterUpsert', (m: any) => dispatchEventsCallback(m, 'post_id'));
+  Voice.addHook('afterCreate', (m: any) => dispatchEventsCallback(m, 'voice_id'));
+  Voice.addHook('afterDestroy', (m: any) => dispatchEventsCallback(m, 'voice_id'));
+  Voice.addHook('afterUpdate', (m: any) => dispatchEventsCallback(m, 'voice_id'));
+  Voice.addHook('afterSave', (m: any) => dispatchEventsCallback(m, 'voice_id'));
+  Voice.addHook('afterUpsert', (m: any) => dispatchEventsCallback(m, 'voice_id'));
 
   console.log('[Hooks]: Sequelize hooks setup.')
 

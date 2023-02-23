@@ -3,7 +3,7 @@ import runner from "../runner"
 export default {
     up: async (queryInterface, Sequelize) => {
         const CREATE_BASE_USER = () => {
-            return queryInterface.createTable('base_user', {
+            return queryInterface.createTable('user', {
                 user_id: {
                     type: Sequelize.UUID,
                     defaultValue: Sequelize.UUIDV4,
@@ -64,8 +64,18 @@ export default {
                     type: Sequelize.UUID,
                     allowNull: false,
                     references: {
-                        model: 'base_user',
+                        model: 'user',
                         key: 'user_id'
+                    },
+                    onDelete: 'cascade',
+                    onUpdate: 'cascade',
+                },
+                file_id: {
+                    type: Sequelize.UUID,
+                    allowNull: false,
+                    references: {
+                        model: 'file',
+                        key: 'file_id'
                     },
                     onDelete: 'cascade',
                     onUpdate: 'cascade',
@@ -103,6 +113,10 @@ export default {
                     type: Sequelize.TEXT,
                     allowNull: true
                 },
+                gender: {
+                    type: Sequelize.TEXT,
+                    allowNull: true
+                },
                 voice_id: {
                     type: Sequelize.UUID,
                     allowNull: false,
@@ -133,16 +147,6 @@ export default {
                     allowNull: false,
                     primaryKey: true
                 },
-                voice_id: {
-                    type: Sequelize.UUID,
-                    allowNull: false,
-                    references: {
-                        model: 'voice',
-                        key: 'voice_id'
-                    },
-                    onDelete: 'cascade',
-                    onUpdate: 'cascade',
-                },
                 path: {
                     type: Sequelize.STRING,
                     allowNull: false,
@@ -166,18 +170,18 @@ export default {
 
         await runner.run([
             () => CREATE_BASE_USER(),
+            () => CREATE_FILES(),
             () => CREATE_VOICE(),
             () => CREATE_RESULT(),
-            () => CREATE_FILES(),
         ])
     },
     // eslint-disable @typescript-eslint/no-unused-vars
     down: (queryInterface, Sequelize) => {
         return runner.run([
             () => queryInterface.dropTable('user'),
-            () => queryInterface.dropTable('voice'),
             () => queryInterface.dropTable('result'),
             () => queryInterface.dropTable('file'),
+            () => queryInterface.dropTable('voice'),
         ])
     }
 };

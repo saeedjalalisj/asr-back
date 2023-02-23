@@ -1,6 +1,6 @@
 
 export default (sequelize, DataTypes) => {
-  const BaseUser = sequelize.define('user', {
+  const User = sequelize.define('user', {
     user_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
@@ -45,9 +45,9 @@ export default (sequelize, DataTypes) => {
     ]
   });
 
-  BaseUser.associate = (models) => {
-    BaseUser.hasMany(models.Voice, { foreignKey: 'user_id', as: 'Voices'   })
+  User.associate = (models) => {
+    User.hasMany(models.Voice, { foreignKey: 'user_id', as: 'Voices' })
   }
 
-  return BaseUser;
+  return User;
 };

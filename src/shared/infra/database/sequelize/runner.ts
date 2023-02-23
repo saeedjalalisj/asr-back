@@ -44,7 +44,7 @@ async function runner (promises) {
          */
 
         else {
-                console.log(err)
+          console.log(err)
           throw new Error(err);
         }
       }

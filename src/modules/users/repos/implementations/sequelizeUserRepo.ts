@@ -13,8 +13,8 @@ export class SequelizeUserRepo implements IUserRepo {
   }
 
   async exists (userEmail: UserEmail): Promise<boolean> {
-    const BaseUserModel = this.models.BaseUser;
-    const baseUser = await BaseUserModel.findOne({
+    const UserModel = this.models.User;
+    const baseUser = await UserModel.findOne({
       where: {
         user_email: userEmail.value
       }
@@ -23,23 +23,23 @@ export class SequelizeUserRepo implements IUserRepo {
   }
 
   async getUserByUserName (userName: UserName | string): Promise<User> {
-    const BaseUserModel = this.models.BaseUser;
-    const baseUser = await BaseUserModel.findOne({
+    const UserModel = this.models.User;
+    const baseUser = await UserModel.findOne({
       where: {
         username: userName instanceof UserName 
           ? (<UserName>userName).value 
           : userName
       }
     });
-    if (!!baseUser === false) throw new Error("User not found.")
+    if (!!baseUser === false) return null;
     return UserMap.toDomain(baseUser);
   }
 
   async getUserByUserId (userId: string): Promise<User> {
-    const BaseUserModel = this.models.BaseUser;
-    const baseUser = await BaseUserModel.findOne({
+    const UserModel = this.models.User;
+    const baseUser = await UserModel.findOne({
       where: {
-        base_user_id: userId
+        user_id: userId
       }
     });
     if (!!baseUser === false) throw new Error("User not found.")
@@ -47,7 +47,7 @@ export class SequelizeUserRepo implements IUserRepo {
   }
 
   async save (user: User): Promise<void> {
-    const UserModel = this.models.BaseUser;
+    const UserModel = this.models.User;
     const exists = await this.exists(user.email);
     
     if (!exists) {

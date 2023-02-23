@@ -1,3 +1,4 @@
+import {Sequelize} from "sequelize";
 
 export default (sequelize, DataTypes) => {
     const File = sequelize.define('file', {
@@ -6,16 +7,6 @@ export default (sequelize, DataTypes) => {
             defaultValue: DataTypes.UUIDV4,
             allowNull: false,
             primaryKey: true
-        },
-        voice_id: {
-            type: DataTypes.UUID,
-            allowNull: false,
-            references: {
-                model: 'voice',
-                key: 'voice_id'
-            },
-            onDelete: 'cascade',
-            onUpdate: 'cascade',
         },
         path: {
             type: DataTypes.STRING,
@@ -28,12 +19,12 @@ export default (sequelize, DataTypes) => {
         created_at: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.literal('CURRENT_TIMESTAMP'),
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
         },
         updated_at: {
             type: DataTypes.DATE,
             allowNull: false,
-            defaultValue: DataTypes.literal('CURRENT_TIMESTAMP')
+            defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
         },
     },{
         timestamps: true,
@@ -42,7 +33,7 @@ export default (sequelize, DataTypes) => {
     });
 
     File.associate = (models) => {
-        File.belongsTo(models.Voice, { foreignKey: "voice_id" });
+        File.hasOne(models.Voice, { foreignKey: "file_id" });
     }
 
     return File;
