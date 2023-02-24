@@ -14,6 +14,7 @@ export interface VoiceProps {
     result: VoiceResult
     status: VoiceStatus;
     userId: string;
+    lang: string;
 }
 
 export class Voice extends AggregateRoot<VoiceProps> {
@@ -35,6 +36,10 @@ export class Voice extends AggregateRoot<VoiceProps> {
 
     get status(): VoiceStatus {
         return this.props.status
+    }
+
+    get lang(): string {
+        return this.props.lang
     }
 
     private constructor (props: VoiceProps, id?: UniqueEntityID) {

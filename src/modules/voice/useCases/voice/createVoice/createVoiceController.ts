@@ -17,7 +17,8 @@ export class CreateVoiceController extends BaseController {
         const dto: CreateVoiceDto = {
             title: TextUtils.sanitize(req.body.title),
             fileId: req.body.fileId,
-            userId
+            userId,
+            lang: req.body.lang
         }
         try {
             const result = await this.useCase.execute(dto);
