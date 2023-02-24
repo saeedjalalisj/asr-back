@@ -8,4 +8,5 @@ export interface IUserRepo {
   getUserByUserId (userId: string): Promise<User>;
   getUserByUserName (userName: UserName | string): Promise<User>;
   save (user: User): Promise<void>;
+  getUserList(page: number, count: number): Promise<User[]>
 }

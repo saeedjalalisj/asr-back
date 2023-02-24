@@ -8,6 +8,7 @@ import { middleware } from '../../../../../shared/infra/http';
 import { getCurrentUserController } from '../../../useCases/getCurrentUser';
 import { refreshAccessTokenController } from '../../../useCases/refreshAccessToken';
 import { logoutController } from '../../../useCases/logout';
+import {getUserListController} from "../../../useCases/getUserList";
 
 const userRouter = express.Router();
 
@@ -33,6 +34,7 @@ userRouter.post('/token/refresh',
   (req, res) => refreshAccessTokenController.execute(req, res)
 )
 
+
 userRouter.delete('/:userId',
   middleware.ensureAuthenticated(),
   (req, res) => deleteUserController.execute(req, res)
@@ -43,6 +45,10 @@ userRouter.get('/:username',
   (req, res) => getUserByUserNameController.execute(req, res)
 )
 
+userRouter.get('/',
+    middleware.ensureAuthenticated(),
+    (req, res) => getUserListController.execute(req, res)
+)
 
 
 export { userRouter };

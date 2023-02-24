@@ -57,4 +57,17 @@ export class SequelizeUserRepo implements IUserRepo {
 
     return;
   }
+
+  async getUserList (page: number, count: number): Promise<User[]> {
+    const UserModel = this.models.User;
+    const offset = page * count;
+    const limit = count;
+    const baseUser = await UserModel.findAndCountAll({limit, offset});
+    if (!!baseUser === false) return null;
+    const result = [] as any;
+    for (const user of baseUser.rows) {
+      result.push(UserMap.toDomain(user))
+    }
+    return result
+  }
 }
